@@ -105,7 +105,7 @@ onMounted(() => {
                 <div class="relative reveal delay-300 mt-12 lg:mt-0">
                     <div
                         class="relative z-10 rounded-[2.5rem] md:rounded-[4rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(79,70,229,0.2)] border-4 md:border-8 border-white">
-                        <img src="/images/junaid.png" alt="Hero Image"
+                        <img src="/images/homeimage.png" alt="Hero Image"
                             class="w-full h-auto object-cover min-h-[350px] md:min-h-[500px]">
                     </div>
 
