@@ -10,13 +10,6 @@ const isEmployee = computed(() => {
 
 const menuItems = ref([
     {
-        label: 'Platform',
-        expanded: false,
-        items: [
-            { label: 'Dashboard', route: 'dashboard', icon: 'pi pi-th-large' }
-        ]
-    },
-    {
         label: 'Staff',
         expanded: false,
         items: [
@@ -26,7 +19,7 @@ const menuItems = ref([
         ]
     },
     {
-        label: 'Aimanova Management',
+        label: 'HR Management',
         expanded: false,
         items: [
             { label: 'Branches', route: 'branches.index', icon: 'pi pi-building' },
@@ -119,13 +112,6 @@ const filteredMenuItems = computed(() => {
 
     return [
         {
-            label: 'Platform',
-            expanded: false,
-            items: [
-                { label: 'Dashboard', route: 'employee.dashboard', icon: 'pi pi-th-large' }
-            ]
-        },
-        {
             label: 'Office Portal',
             expanded: false,
             items: [
@@ -183,6 +169,20 @@ const toggleSection = (index) => {
 
         <!-- Menu -->
         <div class="flex-1 py-4">
+            <!-- Global Dashboard Link (Outside sections) -->
+            <div class="px-3 mb-2">
+                <Link :href="route(isEmployee ? 'employee.dashboard' : 'dashboard')" 
+                    class="flex items-center px-3 py-2 text-xs font-semibold rounded-md transition-colors duration-150 group"
+                    :class="[
+                        route().current(isEmployee ? 'employee.dashboard' : 'dashboard')
+                            ? 'bg-indigo-50 text-indigo-700'
+                            : 'text-black hover:bg-[#1C0D82] hover:text-white'
+                    ]">
+                    <i :class="['pi pi-th-large', 'mr-3 text-lg', route().current(isEmployee ? 'employee.dashboard' : 'dashboard') ? 'text-indigo-700' : 'text-black group-hover:text-white']"></i>
+                    <span class="flex-1">Dashboard</span>
+                </Link>
+            </div>
+
             <template v-for="(section, index) in filteredMenuItems" :key="index">
                 <button @click="toggleSection(index)"
                     class="w-full px-6 py-2 flex items-center justify-between text-[13px] font-semibold text-black hover:text-gray-700 focus:outline-none">
@@ -199,7 +199,7 @@ const toggleSection = (index) => {
                             {{ $page.props.pendingLoanCount + $page.props.pendingAdvanceCount }}
                         </span>
                         <span
-                            v-if="(section.label === 'Self Service' || section.label === 'Aimanova Management' || section.label === 'Company Management') && !isEmployee && $page.props.pendingComplaintCount > 0"
+                            v-if="(section.label === 'Self Service' || section.label === 'HR Management' || section.label === 'Company Management') && !isEmployee && $page.props.pendingComplaintCount > 0"
                             class="bg-orange-500 text-white text-[10px] px-1.5 py-0.5 rounded-full min-w-[18px] text-center border border-white/20">
                             {{ $page.props.pendingComplaintCount }}
                         </span>
