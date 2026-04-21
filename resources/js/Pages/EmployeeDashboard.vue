@@ -389,6 +389,12 @@ const formatCurrency = (v) => new Intl.NumberFormat('en-US', { style: 'currency'
                         <div class="view-hero-sub">{{ selectedItem.date }} · {{ selectedItem.start_time_fmt }}</div>
                     </div>
                     <p class="view-desc">{{ selectedItem.description || 'No description provided.' }}</p>
+                    <div v-if="selectedItem.meeting_link" style="margin-top: 0.5rem;">
+                        <span class="stat-lbl" style="margin-bottom: 0.5rem;">Meeting Link</span>
+                        <a :href="selectedItem.meeting_link" target="_blank" class="action-btn btn-indigo" style="text-decoration: none; display: flex; justify-content: center;">
+                            <i class="pi pi-external-link"></i> Join Meeting
+                        </a>
+                    </div>
                 </div>
                 <template #footer><div class="dlg-footer"><button class="dlg-cancel" @click="viewMeetingDialog = false">Close</button></div></template>
             </Dialog>
