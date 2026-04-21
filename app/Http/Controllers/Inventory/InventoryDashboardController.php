@@ -21,7 +21,7 @@ class InventoryDashboardController extends Controller
         $lowStockCount = InventoryItem::whereHas('stocks', function ($query) {
             $query->select(DB::raw('sum(quantity) as total_qty'))
                   ->groupBy('inventory_item_id')
-                  ->havingRaw('total_qty <= inventory_items.reorder_point');
+                  ->havingRaw('total_qty <= inventory_items.min_stock_level');
         })->count();
 
         return Inertia::render('Inventory/Dashboard', [
@@ -83,7 +83,7 @@ class InventoryDashboardController extends Controller
             $suggestedOrderDate = null;
             $leadTimeDays = 7; // Average procurement lead time
 
-            if ($daysUntilEmpty <= $leadTimeDays + 5 || ($currentStock - $hrDemand) <= $item->reorder_point) {
+            if ($daysUntilEmpty <= $leadTimeDays + 5 || ($currentStock - $hrDemand) <= $item->min_stock_level) {
                 $suggestedReorder = max($item->min_stock_level, $totalPredictedDemand * 1.2); // 20% buffer
                 
                 $orderInDays = max(0, $daysUntilEmpty - $leadTimeDays);
@@ -93,7 +93,7 @@ class InventoryDashboardController extends Controller
             return [
                 'item_id' => $item->id,
                 'item_name' => $item->name,
-                'category' => $item->category->name,
+                'category' => $item->category?->name ?? 'Uncategorized',
                 'current_stock' => $currentStock . ' ' . $item->uom,
                 'daily_usage' => round($dailyUsageRate, 2) . ' / day',
                 'days_until_empty' => $daysUntilEmpty > 365 ? '365+' : $daysUntilEmpty . ' days',

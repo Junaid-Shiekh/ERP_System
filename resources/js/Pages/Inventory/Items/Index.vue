@@ -45,6 +45,9 @@ const openEdit = (item) => {
 };
 
 const submit = () => {
+    // Sync reorder_point with min_stock_level for backend consistency
+    form.reorder_point = form.min_stock_level;
+
     if (editingItem.value) {
         form.put(route('inventory.items.update', editingItem.value.id), {
             onSuccess: () => {
@@ -111,9 +114,6 @@ const units = [
                                     class="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest text-center">
                                     Min Stock</th>
                                 <th
-                                    class="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest text-center">
-                                    Reorder Point</th>
-                                <th
                                     class="px-6 py-4 text-xs font-black text-gray-400 uppercase tracking-widest text-right">
                                     Actions</th>
                             </tr>
@@ -134,9 +134,6 @@ const units = [
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <span class="text-sm font-black text-red-500">{{ item.min_stock_level }}</span>
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    <span class="text-sm font-black text-[#EAB308]">{{ item.reorder_point }}</span>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <button @click="openEdit(item)"
@@ -197,18 +194,11 @@ const units = [
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4">
                         <div class="space-y-1">
-                            <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Min Stock
-                                Level</label>
+                            <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Minimum Stock Level (Alert Threshold)</label>
                             <input v-model="form.min_stock_level" type="number"
                                 class="w-full h-10 px-4 rounded-lg border border-gray-200 focus:border-[#1C0D82] focus:ring-0 text-sm transition-all shadow-sm">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Reorder
-                                Point</label>
-                            <input v-model="form.reorder_point" type="number"
-                                class="w-full h-10 px-4 rounded-lg border border-gray-200 focus:border-[#1C0D82] focus:ring-0 text-sm transition-all shadow-sm text-yellow-600 font-bold">
                         </div>
                     </div>
 

@@ -98,8 +98,8 @@ const props = defineProps({
                                     <i :class="log.type === 'In' ? 'pi pi-arrow-down-left' : (log.type === 'Out' ? 'pi pi-arrow-up-right' : 'pi pi-sync')"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-sm font-bold text-gray-900">{{ log.item.name }}</p>
-                                    <p class="text-xs text-gray-500">{{ log.warehouse.name }} • {{ log.reason }}</p>
+                                    <p class="text-sm font-bold text-gray-900">{{ log.item?.name || 'Unknown Item' }}</p>
+                                    <p class="text-xs text-gray-500">{{ log.warehouse?.name || 'Unknown Warehouse' }} • {{ log.reason }}</p>
                                 </div>
                                 <div class="text-right">
                                     <p :class="['text-sm font-black', log.quantity > 0 ? 'text-green-600' : 'text-red-600']">
@@ -138,8 +138,8 @@ const props = defineProps({
                                 </div>
                                 <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
                                     <div v-for="stock in warehouse.stocks.slice(0, 3)" :key="stock.id" class="flex-shrink-0 bg-gray-50 px-3 py-2 rounded border border-gray-100">
-                                        <p class="text-[10px] text-gray-500 font-bold uppercase truncate w-24">{{ stock.item.name }}</p>
-                                        <p class="text-sm font-black text-[#1C0D82]">{{ stock.quantity }} <span class="text-[10px] font-medium text-gray-400">{{ stock.item.uom }}</span></p>
+                                        <p class="text-[10px] text-gray-500 font-bold uppercase truncate w-24">{{ stock.item?.name || 'Unknown Item' }}</p>
+                                        <p class="text-sm font-black text-[#1C0D82]">{{ stock.quantity }} <span class="text-[10px] font-medium text-gray-400">{{ stock.item?.uom || '' }}</span></p>
                                     </div>
                                     <div v-if="warehouse.stocks.length > 3" class="flex-shrink-0 bg-white px-3 py-2 rounded border border-dashed border-gray-200 flex items-center justify-center">
                                          <p class="text-[10px] font-bold text-gray-400">+{{ warehouse.stocks.length - 3 }} more</p>
